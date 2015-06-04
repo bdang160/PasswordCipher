@@ -2,6 +2,7 @@ package projectElements;
 
 import static org.junit.Assert.*;
 
+import javax.swing.JTextField;
 import org.junit.Test;
 
 

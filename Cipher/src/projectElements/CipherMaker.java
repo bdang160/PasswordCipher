@@ -9,8 +9,7 @@ package projectElements;
 
 //This class takes in a String password and converts it into
 //a new password using a Caesar cipher
-//TODO Make a GUI for this
-//TODO Make the values that can be inputed more exclusive
+//TODO Allow spaces to be used
 public class CipherMaker {
 
 	private String original;
@@ -20,7 +19,7 @@ public class CipherMaker {
 
 	//Sections of acceptable ASCII values that can be used
 
-	//Characters "!, ", #, $, %"
+	//Characters "!, ", #, $, %, &"
 	private static final int section1Start = 33;
 	private static final int section1End = 38;
 	private static final int section1Length = 6;
@@ -71,7 +70,7 @@ public class CipherMaker {
 
 	//This method returns a string where each character has been shifted
 	//three spaces
-	public String createCipher(String input) {
+	private String createCipher(String input) {
 		String retVal = ""; //String to be returns
 
 		//Iterates through the length of the string
@@ -112,7 +111,7 @@ public class CipherMaker {
 
 	//This method returns a string where each character has been shifted
 	//backward three spaces
-	public String decryptCipher(String input) {
+	private String decryptCipher(String input) {
 		String retVal = "";
 		for (int index = 0; index < input.length(); index++) {
 			int org = input.charAt(index);
