@@ -52,7 +52,8 @@ public class CipherMaker {
 					(passwordIn.charAt(index) >= section3Start &&
 					passwordIn.charAt(index) <= section3End) ||
 					(passwordIn.charAt(index) >= section4Start &&
-					passwordIn.charAt(index) <= section4End) 
+					passwordIn.charAt(index) <= section4End ||
+					passwordIn.charAt(index) == 32) //32 is ASCII for "space"
 					) {
 				original = passwordIn; //Sets original to the input
 			}
@@ -61,7 +62,7 @@ public class CipherMaker {
 		}
 
 
-		
+
 		encrypted = createCipher(original);
 		decrypted = decryptCipher(original);
 
@@ -77,34 +78,40 @@ public class CipherMaker {
 		for (int index = 0; index < input.length(); index++) {
 			//Finds the ASCII value of the current character
 			//Adds three to that
-			int org = input.charAt(index);
-			int tempInt = input.charAt(index) + caesarShift;
-			
-			//Changing the character based on which section the character was
-			//originally in
-			if (section1Start <= org && org <= section1End) {
-				if (tempInt > section1End) {
-					tempInt -= section1Length;
+
+			//The case if there's a space, leaves the space
+			if (input.charAt(index) == 32)
+				retVal += (char) 32;
+			else {
+				int org = input.charAt(index);
+				int tempInt = input.charAt(index) + caesarShift;
+
+				//Changing the character based on which section the character was
+				//originally in
+				if (section1Start <= org && org <= section1End) {
+					if (tempInt > section1End) {
+						tempInt -= section1Length;
+					}
 				}
-			}
-			if (section2Start <= org && org <= section2End) {
-				if (tempInt > section2End) {
-					tempInt -= section2Length;
+				if (section2Start <= org && org <= section2End) {
+					if (tempInt > section2End) {
+						tempInt -= section2Length;
+					}
 				}
-			}
-			if (section3Start <= org && org <= section3End) {
-				if (tempInt > section3End) {
-					tempInt -= section3Length;
+				if (section3Start <= org && org <= section3End) {
+					if (tempInt > section3End) {
+						tempInt -= section3Length;
+					}
 				}
-			}
-			if (section4Start <= org && org <= section4End) {
-				if (tempInt > section4End) {
-					tempInt -= section4Length;
+				if (section4Start <= org && org <= section4End) {
+					if (tempInt > section4End) {
+						tempInt -= section4Length;
+					}
 				}
+
+				char tempChar = (char) tempInt; //Converts int to char
+				retVal += tempChar; //Adds the character to the return string
 			}
-			
-			char tempChar = (char) tempInt; //Converts int to char
-			retVal += tempChar; //Adds the character to the return string
 		}
 		return retVal;
 	}
@@ -114,31 +121,37 @@ public class CipherMaker {
 	private String decryptCipher(String input) {
 		String retVal = "";
 		for (int index = 0; index < input.length(); index++) {
-			int org = input.charAt(index);
-			int tempInt = input.charAt(index)- caesarShift;
-			
-			if (section1Start <= org && org <= section1End) {
-				if (tempInt < section1Start) {
-					tempInt += section1Length;
+
+			//The case if there's a space, leaves the space
+			if (input.charAt(index) == 32)
+				retVal += (char) 32;
+			else {
+				int org = input.charAt(index);
+				int tempInt = input.charAt(index)- caesarShift;
+
+				if (section1Start <= org && org <= section1End) {
+					if (tempInt < section1Start) {
+						tempInt += section1Length;
+					}
 				}
-			}
-			if (section2Start <= org && org <= section2End) {
-				if (tempInt < section2Start) {
-					tempInt += section2Length;
+				if (section2Start <= org && org <= section2End) {
+					if (tempInt < section2Start) {
+						tempInt += section2Length;
+					}
 				}
-			}
-			if (section3Start <= org && org <= section3End) {
-				if (tempInt < section3Start) {
-					tempInt += section3Length;
+				if (section3Start <= org && org <= section3End) {
+					if (tempInt < section3Start) {
+						tempInt += section3Length;
+					}
 				}
-			}
-			if (section4Start <= org && org <= section4End) {
-				if (tempInt < section4Start) {
-					tempInt += section4Length;
+				if (section4Start <= org && org <= section4End) {
+					if (tempInt < section4Start) {
+						tempInt += section4Length;
+					}
 				}
+				char tempChar = (char) tempInt;
+				retVal += tempChar;
 			}
-			char tempChar = (char) tempInt;
-			retVal += tempChar;
 		}
 		return retVal;
 	}
